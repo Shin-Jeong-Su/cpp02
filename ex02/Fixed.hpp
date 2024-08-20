@@ -22,23 +22,29 @@ class Fixed
 		void	setRawBits(int const raw);
 		float	toFloat(void) const;
 		int		toInt(void) const;
-		static Fixed&	min(const Fixed& cmp1, const Fixed &cmp2) const;
 
-		void	operator=(const Fixed &fixed);
-		bool	operator>(const Fixed &fixed);
-		bool	operator<(const Fixed &fixed);
-		bool	operator>=(const Fixed &fixed);
-		bool	operator<=(const Fixed &fixed);
-		bool	operator==(const Fixed &fixed);
-		bool	operator!=(const Fixed &fixed);
-		bool	operator+(const Fixed &fixed);
-		bool	operator-(const Fixed &fixed);
-		bool	operator*(const Fixed &fixed);
-		bool	operator/(const Fixed &fixed);
+		void	operator=(const Fixed &rhs);
+		bool	operator>(const Fixed &rhs);
+		bool	operator>(const Fixed &rhs) const;
+		bool	operator<(const Fixed &rhs);
+		bool	operator<(const Fixed &rhs) const;
+		bool	operator>=(const Fixed &rhs);
+		bool	operator<=(const Fixed &rhs);
+		bool	operator==(const Fixed &rhs);
+		bool	operator!=(const Fixed &rhs);
+		const Fixed&	operator+(const Fixed &rhs);
+		const Fixed&	operator-(const Fixed &rhs);
+		const Fixed&	operator*(const Fixed &rhs);
+		const Fixed&	operator/(const Fixed &rhs);
 		const Fixed&	operator++();
 		const Fixed		operator++(int);
 		const Fixed&	operator--();
 		const Fixed		operator--(int);
+
+		static Fixed&	min(Fixed& lhs, Fixed& rhs);
+		static const Fixed&	min(const Fixed& lhs, const Fixed& rhs);
+		static Fixed&	max(Fixed& lhs, Fixed& rhs);
+		static const Fixed&	max(const Fixed& lhs, const Fixed& rhs);
 };
-std::ostream&	operator<<(std::ostream &os, const Fixed &fixed);
+std::ostream&	operator<<(std::ostream &os, const Fixed &rhs);
 #endif

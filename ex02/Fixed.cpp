@@ -1,6 +1,23 @@
 #include "Fixed.hpp"
 
+//static
 const int Fixed::_fractionalBits = 8;
+Fixed&	Fixed::min(Fixed& lhs, Fixed& rhs)
+{
+	return (lhs < rhs) ? lhs : rhs;
+}
+const Fixed&	Fixed::min(const Fixed& lhs, const Fixed& rhs)
+{
+	return (lhs < rhs) ? lhs : rhs;
+}
+Fixed&	Fixed::max(Fixed& lhs, Fixed& rhs)
+{
+	return (lhs > rhs) ? lhs : rhs;
+}
+const Fixed&	Fixed::max(const Fixed& lhs, const Fixed& rhs)
+{
+	return (lhs > rhs) ? lhs : rhs;
+}
 
 //Constructor
 Fixed::Fixed():_value(0)
@@ -48,13 +65,94 @@ int		Fixed::toInt(void) const
 }
 
 //operator overloading
-void Fixed::operator =(const Fixed &fixed)
+void Fixed::operator =(const Fixed &rhs)
 {
 	std::cout<<"Copy assignment operator called\n";
-	_value = fixed.getRawBits();
+	_value = rhs.getRawBits();
 }
-std::ostream&	operator<<(std::ostream &os, const Fixed &fixed)
+bool	Fixed::operator>(const Fixed &rhs)
 {
-	os<<fixed.toFloat();
+	return (_value > rhs.getRawBits());
+}
+bool	Fixed::operator>(const Fixed &rhs) const
+{
+	return (_value > rhs.getRawBits());
+}
+bool	Fixed::operator<(const Fixed &rhs)
+{
+	return (_value < rhs.getRawBits());
+}
+bool	Fixed::operator<(const Fixed &rhs) const
+{
+	return (_value < rhs.getRawBits());
+}
+bool	Fixed::operator>=(const Fixed &rhs)
+{
+	return (_value >= rhs.getRawBits());
+}
+bool	Fixed::operator<=(const Fixed &rhs)
+{
+	return (_value <= rhs.getRawBits());
+}
+bool	Fixed::operator==(const Fixed &rhs)
+{
+	return (_value == rhs.getRawBits());
+}
+bool	Fixed::operator!=(const Fixed &rhs)
+{
+	return (_value != rhs.getRawBits());
+}
+const Fixed&	Fixed::operator+(const Fixed &rhs)
+{
+	_value += rhs.getRawBits();
+	return *this;
+}
+const Fixed&	Fixed::operator-(const Fixed &rhs)
+{
+	_value -= rhs.getRawBits();
+	return *this;
+}
+const Fixed&	Fixed::operator*(const Fixed &rhs)
+{
+	int64_t product = _value * rhs.getRawBits();
+	_value = product >>_fractionalBits;
+	return *this;
+}
+const Fixed&	Fixed::operator/(const Fixed &rhs)
+{
+	int divisor = rhs.getRawBits();
+	if (divisor == 0)
+		throw std::runtime_error("Division by zero");
+	int64_t	dividend = static_cast<int64_t>(_value)<<_fractionalBits;
+	dividend /= divisor;
+	_value = static_cast<int32_t>(dividend);
+	return *this;
+}
+const Fixed&	Fixed::operator++()
+{
+	_value++;
+	return *this;
+}
+const Fixed		Fixed::operator++(int)
+{
+	Fixed tmp(this->toFloat());
+	_value++;
+	return tmp;
+}
+const Fixed&	Fixed::operator--()
+{
+	_value--;
+	return *this;
+}
+const Fixed		Fixed::operator--(int)
+{
+	Fixed tmp(this->toFloat());
+	_value--;
+	return tmp;
+
+}
+std::ostream&	operator<<(std::ostream &os, const Fixed &rhs)
+{
+	os<<rhs.toFloat();
 	return (os);
 }
