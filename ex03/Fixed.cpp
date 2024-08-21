@@ -2,7 +2,6 @@
 
 //static
 const int Fixed::_fractionalBits = 8;
-
 Fixed&	Fixed::min(Fixed& lhs, Fixed& rhs)
 {
 	return (lhs < rhs) ? lhs : rhs;
@@ -66,10 +65,11 @@ int		Fixed::toInt(void) const
 }
 
 //operator overloading
-void Fixed::operator =(const Fixed &rhs)
+Fixed& Fixed::operator=(const Fixed &rhs)
 {
 	// std::cout<<"Copy assignment operator called\n";
-	_value = rhs.getRawBits();
+	_value = rhs._value;
+	return (*this);
 }
 bool	Fixed::operator>(const Fixed &rhs)
 {
