@@ -16,7 +16,9 @@ class Point
 
 		~Point();
 
-
-		Point& operator=(const Point& rhs);
+		static Fixed	getCrossProduct(const Point& a, const Point& b, const Point& c);
+		
+		Point&	operator=(const Point& rhs);
+		bool	operator==(const Point& rhs) const;
 };
 #endif

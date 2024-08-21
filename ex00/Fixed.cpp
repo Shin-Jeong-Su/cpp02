@@ -22,10 +22,11 @@ void Fixed::setRawBits(int const raw)
 {
 	_value=raw;
 }
-void Fixed::operator =(const Fixed &fixed)
+Fixed& Fixed::operator =(const Fixed &fixed)
 {
 	std::cout<<"Copy assignment operator called\n";
 	_value = fixed.getRawBits();
+	return *this;
 }
 
 const int Fixed::_fractionalBits = 8;

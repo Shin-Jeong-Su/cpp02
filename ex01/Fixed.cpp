@@ -48,10 +48,11 @@ int		Fixed::toInt(void) const
 }
 
 //operator overloading
-void Fixed::operator =(const Fixed &fixed)
+Fixed& Fixed::operator =(const Fixed &fixed)
 {
 	std::cout<<"Copy assignment operator called\n";
 	_value = fixed.getRawBits();
+	return *this;
 }
 std::ostream&	operator<<(std::ostream &os, const Fixed &fixed)
 {

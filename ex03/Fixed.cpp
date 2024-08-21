@@ -95,7 +95,7 @@ bool	Fixed::operator<=(const Fixed &rhs)
 {
 	return (_value <= rhs.getRawBits());
 }
-bool	Fixed::operator==(const Fixed &rhs)
+bool	Fixed::operator==(const Fixed &rhs) const
 {
 	return (_value == rhs.getRawBits());
 }
@@ -103,23 +103,23 @@ bool	Fixed::operator!=(const Fixed &rhs)
 {
 	return (_value != rhs.getRawBits());
 }
-const Fixed&	Fixed::operator+(const Fixed &rhs)
+Fixed&	Fixed::operator+(const Fixed &rhs)
 {
 	_value += rhs.getRawBits();
 	return *this;
 }
-const Fixed&	Fixed::operator-(const Fixed &rhs)
+Fixed&	Fixed::operator-(const Fixed &rhs)
 {
 	_value -= rhs.getRawBits();
 	return *this;
 }
-const Fixed&	Fixed::operator*(const Fixed &rhs)
+Fixed&	Fixed::operator*(const Fixed &rhs)
 {
 	int64_t product = _value * rhs.getRawBits();
 	_value = product >>_fractionalBits;
 	return *this;
 }
-const Fixed&	Fixed::operator/(const Fixed &rhs)
+Fixed&	Fixed::operator/(const Fixed &rhs)
 {
 	int divisor = rhs.getRawBits();
 	if (divisor == 0)
@@ -129,23 +129,23 @@ const Fixed&	Fixed::operator/(const Fixed &rhs)
 	_value = static_cast<int32_t>(dividend);
 	return *this;
 }
-const Fixed&	Fixed::operator++()
+Fixed&	Fixed::operator++()
 {
 	_value++;
 	return *this;
 }
-const Fixed		Fixed::operator++(int)
+Fixed		Fixed::operator++(int)
 {
 	Fixed tmp(this->toFloat());
 	_value++;
 	return tmp;
 }
-const Fixed&	Fixed::operator--()
+Fixed&	Fixed::operator--()
 {
 	_value--;
 	return *this;
 }
-const Fixed		Fixed::operator--(int)
+Fixed		Fixed::operator--(int)
 {
 	Fixed tmp(this->toFloat());
 	_value--;
